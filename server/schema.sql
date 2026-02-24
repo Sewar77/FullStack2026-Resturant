@@ -1,4 +1,3 @@
--- to store db tables: 
 -- commands for sql
 
 -- ddl : data defination language 
@@ -13,6 +12,12 @@ create table users (
 	email varchar(100) unique not null, 
 	password varchar(50) not null
 );
+
+-- update column:
+-- ALTER TABLE table_name RENAME COLUMN old_name TO new_name;   
+alter table users rename password to hashed_password
+
+
 -- column_name data_type constraint 
 --constrainet types: unique, not null, primary key, default(n)
 
@@ -24,6 +29,8 @@ create table users (
 -- serial 1,2,3.. auto counter 
 
 -- boolean t/f
+
+
 
 -- dml
 -- get all data
@@ -42,4 +49,19 @@ where userid=5
 
 --delete
 delete from users where userid=6
+
+
+--TASK:
+-- data base for restaurant
+
+-- table names: 
+-- users: 
+-- id, name, email, hashed_password, role(user, manager, employee) , 
+
+-- categories:
+-- id, name, description
+
+-- menu/food:
+-- id, name, cat_id(foreign key reference on category id), 
+-- description, price, image, is_available
 
