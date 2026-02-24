@@ -1,3 +1,7 @@
+#postgresql://[user[:password]@][host][:port][/dbname]
+
+connection_string=postgresql://postgres:Test1234@localhost:5432/resturant_db
+
 -- commands for sql
 
 -- ddl : data defination language 
