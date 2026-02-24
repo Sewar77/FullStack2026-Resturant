@@ -1,1 +1,4 @@
-console.log("first commit changes")
+import { connectDB } from "./src/config/db";
+
+
+connectDB()
