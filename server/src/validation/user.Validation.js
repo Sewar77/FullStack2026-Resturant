@@ -15,13 +15,13 @@ export const registerSchema = Joi.object({
             "string.empty": "Email is required",
             "string.email": "Email must be a valid email address"
         }),
-    password: Joi.string().min(8).max(1024).pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/).required()
+    password: Joi.string().min(6).max(1024).pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/).required()
         .messages({
-            "string.min": "Password must be at least 8 characters",
+            "string.min": "Password must be at least 6 characters",
             "string.max": "Password must be at most 1024 charecter",
             "string.required": "Passsword is required",
             "string.empty": "Passsword is required",
-            "string.pattern": "Password should contain at least one upper case letter and one lower case letter, and numbers, and at least on special charecter"
+            "string.pattern.base": "Password should contain at least one upper case letter and one lower case letter, and numbers, and at least on special charecter"
         }),
     role: Joi.string().valid("user", "manager", "employee").default("user").required().messages({
         "string.valid": "Role must be either user or employee",
