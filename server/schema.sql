@@ -14,7 +14,7 @@ create table users (
 	created_at timestamp default current_timestamp, 
 	name varchar(100) not null, 
 	email varchar(100) unique not null, 
-	password varchar(50) not null
+	hashed_password varchar(255) not null
 );
 
 -- update column:
@@ -55,6 +55,12 @@ where userid=5
 delete from users where userid=6
 
 
+alter table users add column role text[] default array['user']
+
+select * from users
+
+alter table users add constraint check_role check (role<@ array['user', 'manager', 'emplyee'])
+
 --TASK:
 -- data base for restaurant
 
@@ -68,4 +74,30 @@ delete from users where userid=6
 -- menu/food:
 -- id, name, cat_id(foreign key reference on category id), 
 -- description, price, image, is_available
+
+
+
+create table categories(
+catId serial primary key, 
+name varchar(50) not null, 
+description text
+)
+select * from categories
+
+alter table categories add column created_at timestamp default current_timestamp
+
+create table menu(
+menuId serial primary key, 
+name varchar(100) not null, 
+description text , 
+price money, 
+quantity int, 
+image text, 
+cat_id int , 
+foreign key (cat_id) references categories(catId) 
+)
+
+select * from menu
+alter table menu add column created_at timestamp default current_timestamp
+
 
