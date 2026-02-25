@@ -3,10 +3,8 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const pool = new Pool({
-    connectionString: process.env.connection_string
+    connectionString: process.env.CONNECTION_STRING
 })
-
-
 
 const connectDB = async () => {
     try {
@@ -20,4 +18,5 @@ const connectDB = async () => {
 };
 
 
-export { connectDB, pool };
+export default connectDB
+export { pool }
