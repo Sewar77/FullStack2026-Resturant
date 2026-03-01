@@ -57,7 +57,7 @@ export const login = async (req, res) => {
 
 
 export const refreshToken = async (req, res) => {
-    const token = req.cokkies.refreshTokens;
+    const token = req.cookies.refreshTokens;
     try {
         if (!token) {
             return res.status(401).json({ message: "Unauthorized, no refresh token provided" })
