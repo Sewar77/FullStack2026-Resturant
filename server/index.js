@@ -5,6 +5,8 @@ import express from 'express'
 import { errorHandler } from "./src/middleware/errorHandler.Middleware.js";
 import cors from "cors"
 import helmet from "helmet"
+import bodyPrser from "body-parser"
+import cookieParser from "cookie-parser";
 dotenv.config()
 connectDB()
 
@@ -16,7 +18,8 @@ app.use(cors({
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
 }))
-
+app.use(cookieParser())
+app.use(bodyPrser.urlencoded({ extended: true }))
 app.use('/api', authRoutes)
 
 app.use(errorHandler)
