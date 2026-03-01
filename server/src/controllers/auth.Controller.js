@@ -41,7 +41,7 @@ export const login = async (req, res) => {
         //generate tokens=> access, refresh
         const accessToken = generateAccessTokens(isUserExist)
         const refreshTokens = generateRefreshTokens(isUserExist)
-
+        console.log(accessToken)
         //should store the refresh tokens in db
         await saveRefreshToken(isUserExist.userid, refreshTokens)
         //set tokens in cookies
