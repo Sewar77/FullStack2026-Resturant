@@ -3,8 +3,9 @@ import bcrypt from "bcryptjs"
 import { findUserByEmail, saveRefreshToken } from "../models/user.Model.js";
 import { generateRefreshTokens, verifyAccessToken, verifyRefreshTokens, generateAccessTokens } from "../utils/tokens.utils.js";
 import { setAccessTokenCookie, setRefreshTokenCookie } from "../utils/cookies.utils.js";
+import { asyncHandler } from "../middleware/asyncHandler.Middleware.js";
 
-export const register = async (req, res) => {
+export const register = asyncHandler(async (req, res) => {
     const { name, email, password } = req.validateData
     try {
         const existedUser = await findUserByEmail(email)
@@ -19,24 +20,30 @@ export const register = async (req, res) => {
         return res.status(201).json({ message: "user created successfully", user: newUser })
     }
     catch (err) {
-        return res.status(500).json({ message: "internal server error, in register" })
+        throw err
     }
-}
+})
 
-export const login = async (req, res) => {
+export const login = asyncHandler(async (req, res) => {
     const { email, password } = req.validateData;
     try {
         if (!email || !password) {
-            return res.status(400).json({ message: "all fields are required!" })
+            const error = new Error("all fields are required!")
+            err.statusCode = 400
+            throw error
         }
         const isUserExist = await findUserByEmail(email)
         if (!isUserExist) {
-            return res.status(400).json({ message: "User not registered, please register to log in" })
+            const error = new Error("User not registered, please register to log in")
+            err.statusCode = 400
+            throw error
         }
         const isMatch = await bcrypt.compare(password, isUserExist.hashed_password)
 
         if (!isMatch) {
-            return res.status(400).json({ message: "password or email is incorrect" })
+            const error = new Error("password or email is incorrect")
+            err.statusCode = 400
+            throw error
         }
         //generate tokens=> access, refresh
         const accessToken = generateAccessTokens(isUserExist)
@@ -51,9 +58,9 @@ export const login = async (req, res) => {
         return res.status(200).json({ message: "logged in successfully", user: { userid: isUserExist.userid, name: isUserExist.name, email: isUserExist.email, role: isUserExist.role } })
     }
     catch (err) {
-        return res.status(500).json({ message: "internal server error in login" })
+        throw err
     }
-}
+})
 
 
 export const refreshToken = async (req, res) => {
@@ -76,6 +83,24 @@ export const refreshToken = async (req, res) => {
         res.json({ message: "access tokens refreshed successfully" })
     }
     catch (err) {
-        return res.status(500).json({ message: "internal server error in refresh tokens" })
+        throw err
     }
 }
+
+
+export const logout = asyncHandler(async (req, res) => {
+    const token = req.cookies.refreshTokens;
+    try {
+        if (!token) {
+            return res.status(400).json({ message: "no refresh token provided" })
+        }
+        const decoded = verifyRefreshTokens(token)
+        await saveRefreshToken(decoded.userid, null)
+        res.clearCookie("accessToken")
+        res.clearCookie("refreshTokens")
+        return res.status(200).json({ message: "logged out successfully" })
+    }
+    catch (err) {
+        throw err
+    }
+})
