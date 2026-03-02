@@ -6,6 +6,7 @@ import { errorHandler } from "./src/middleware/errorHandler.Middleware.js";
 import cors from "cors"
 import userRoutes from "./src/routes/user.Routes.js"
 import helmet from "helmet"
+import { globalRateLimit } from "./src/middleware/globalRateLimit.Middleware.js";
 import bodyPrser from "body-parser"
 import cookieParser from "cookie-parser";
 dotenv.config()
@@ -13,6 +14,7 @@ connectDB()
 
 const app = express()
 app.use(express.json())
+app.use(globalRateLimit)
 app.use(helmet())
 app.use(cors({
     origin: "http://localhost:5000",
