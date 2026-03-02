@@ -1,5 +1,6 @@
 import { getAllUsers, getUserById, findUserByEmail, deleteUserById, updateUserById } from "../models/user.Model.js";
-export const getUserByIdController = async (req, res) => {
+import { asyncHandler } from "../middleware/asyncHandler.Middleware.js";
+export const getUserByIdController = asyncHandler(async (req, res) => {
     const userId = req.params.id;
     try {
         const user = await getUserById(userId)
@@ -10,9 +11,9 @@ export const getUserByIdController = async (req, res) => {
     } catch (err) {
         return res.status(500).json({ message: "internal server error by id" })
     }
-}
+})
 
-export const getAllUsersController = async (req, res) => {
+export const getAllUsersController = asyncHandler(async (req, res) => {
     try {
         const users = await getAllUsers()
         if (users.length === 0) {
@@ -22,9 +23,9 @@ export const getAllUsersController = async (req, res) => {
     } catch (err) {
         return res.status(500).json({ message: "internal server error in get all users" })
     }
-}
+})
 
-export const findUserByEmailController = async (req, res) => {
+export const findUserByEmailController = asyncHandler(async (req, res) => {
     const { email } = req.body
     try {
         const user = await findUserByEmail(email)
@@ -35,5 +36,5 @@ export const findUserByEmailController = async (req, res) => {
     } catch (err) {
         return res.status(500).json({ message: "internal server error" })
     }
-}
+})
 
