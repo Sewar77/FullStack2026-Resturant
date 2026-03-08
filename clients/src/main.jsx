@@ -5,11 +5,14 @@ import App from "./App.jsx";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./Theme/Theme.jsx";
 import CssBaseline from "@mui/material/CssBaseline";
+import { UserProvider } from "./Context/UserContext.jsx";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <App />
-    </ThemeProvider>
+    <UserProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <App />
+      </ThemeProvider>
+    </UserProvider>
   </StrictMode>
 );

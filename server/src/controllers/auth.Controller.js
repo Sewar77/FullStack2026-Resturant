@@ -14,6 +14,7 @@ export const register = asyncHandler(async (req, res) => {
         }
         const hashed_password = await bcrypt.hash(password, 10)
         const newUser = await createUser(name, email, hashed_password, "user")
+        console.log(newUser)
         if (!newUser) {
             return res.status(400).json({ message: "failed to create user" })
         }
