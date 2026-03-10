@@ -1,108 +1,72 @@
+import bcrypt from "bcryptjs";
 import { createUser } from "../models/auth.Model.js";
-import bcrypt from "bcryptjs"
-import { findUserByEmail, saveRefreshToken } from "../models/user.Model.js";
-import { generateRefreshTokens, verifyAccessToken, verifyRefreshTokens, generateAccessTokens } from "../utils/tokens.utils.js";
+import { findUserByEmail, getUserById, saveRefreshToken } from "../models/user.Model.js";
+import { generateAccessTokens, generateRefreshTokens, verifyRefreshTokens } from "../utils/tokens.utils.js";
 import { setAccessTokenCookie, setRefreshTokenCookie } from "../utils/cookies.utils.js";
 import { asyncHandler } from "../middleware/asyncHandler.Middleware.js";
 
 export const register = asyncHandler(async (req, res) => {
-    const { name, email, password } = req.validateData
-    try {
-        const existedUser = await findUserByEmail(email)
-        if (existedUser) {
-            return res.status(400).json({ message: "email already exists" })
-        }
-        const hashed_password = await bcrypt.hash(password, 10)
-        const newUser = await createUser(name, email, hashed_password, "user")
-        console.log(newUser)
-        if (!newUser) {
-            return res.status(400).json({ message: "failed to create user" })
-        }
-        return res.status(201).json({ message: "user created successfully", user: newUser })
+    const { name, email, password } = req.validateData;
+
+    if (!name || !email || !password) {
+        return res.status(400).json({ message: "All fields are required" });
     }
-    catch (err) {
-        throw err
-    }
-})
+
+    const existedUser = await findUserByEmail(email);
+    if (existedUser) return res.status(400).json({ message: "Email already exists" });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = await createUser(name, email, hashedPassword, "user");
+
+    if (!newUser) return res.status(400).json({ message: "Failed to create user" });
+
+    res.status(201).json({ message: "User created successfully", user: { userid: newUser.userid, name, email, role: "user" } });
+});
 
 export const login = asyncHandler(async (req, res) => {
     const { email, password } = req.validateData;
-    console.log(email, password)
-    try {
-        if (!email || !password) {
-            const error = new Error("all fields are required!")
-            error.statusCode = 400
-            throw error
-        }
-        const isUserExist = await findUserByEmail(email)
-        if (!isUserExist) {
-            const error = new Error("User not registered, please register to log in")
-            error.statusCode = 400
-            throw error
-        }
-        const isMatch = await bcrypt.compare(password, isUserExist.hashed_password)
 
-        if (!isMatch) {
-            const error = new Error("password or email is incorrect")
-            error.statusCode = 400
-            throw error
-        }
-        //generate tokens=> access, refresh
-        const accessToken = generateAccessTokens(isUserExist)
-        const refreshTokens = generateRefreshTokens(isUserExist)
-        console.log(accessToken)
-        //should store the refresh tokens in db
-        await saveRefreshToken(isUserExist.userid, refreshTokens)
-        //set tokens in cookies
-        setAccessTokenCookie(res, accessToken)
-        setRefreshTokenCookie(res, refreshTokens)
+    if (!email || !password) return res.status(400).json({ message: "All fields are required" });
 
-        return res.status(200).json({ message: "logged in successfully", user: { userid: isUserExist.userid, name: isUserExist.name, email: isUserExist.email, role: isUserExist.role } })
-    }
-    catch (err) {
-        throw err
-    }
-})
+    const user = await findUserByEmail(email);
+    if (!user) return res.status(400).json({ message: "User not registered" });
 
+    const isMatch = await bcrypt.compare(password, user.hashed_password);
+    if (!isMatch) return res.status(400).json({ message: "Email or password incorrect" });
 
-export const refreshToken = async (req, res) => {
-    const token = req.cookies.refreshTokens;
-    try {
-        if (!token) {
-            return res.status(401).json({ message: "Unauthorized, no refresh token provided" })
-        }
-        const decoded = verifyRefreshTokens(token)
+    const accessToken = generateAccessTokens(user);
+    const refreshToken = generateRefreshTokens(user);
 
-        const user = await findUserByEmail(decoded.email)
-        if (!user) {
-            return res.status(401).json({ message: "unautharized" })
-        }
+    await saveRefreshToken(user.userid, refreshToken);
 
-        const newAccessTokens = generateAccessTokens(user)
+    setAccessTokenCookie(res, accessToken);
+    setRefreshTokenCookie(res, refreshToken);
 
-        setAccessTokenCookie(res, newAccessTokens)
-
-        res.json({ message: "access tokens refreshed successfully" })
-    }
-    catch (err) {
-        throw err
-    }
-}
-
+    res.status(200).json({
+        message: "Logged in successfully",
+        user: { userid: user.userid, name: user.name, email: user.email, role: user.role }
+    });
+});
 
 export const logout = asyncHandler(async (req, res) => {
     const token = req.cookies.refreshTokens;
-    try {
-        if (!token) {
-            return res.status(400).json({ message: "no refresh token provided" })
-        }
-        const decoded = verifyRefreshTokens(token)
-        await saveRefreshToken(decoded.userid, null)
-        res.clearCookie("accessToken")
-        res.clearCookie("refreshTokens")
-        return res.status(200).json({ message: "logged out successfully" })
-    }
-    catch (err) {
-        throw err
-    }
-})
+
+    if (!token) return res.status(400).json({ message: "No refresh token provided" });
+
+    const decoded = verifyRefreshTokens(token);
+    await saveRefreshToken(decoded.userid, null);
+
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshTokens");
+
+    res.status(200).json({ message: "Logged out successfully" });
+});
+
+export const currentUser = asyncHandler(async (req, res) => {
+    const userId = req.user.userid;
+
+    const me = await getUserById(userId);
+    if (!me) return res.status(404).json({ message: "User not found" });
+
+    return res.status(200).json({ message: "User fetched successfully", me });
+});

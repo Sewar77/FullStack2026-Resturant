@@ -63,7 +63,7 @@ const theme = createTheme({
           padding: "12px 24px",
           transition: "all 0.3s ease",
           fontWeight: 600,
-          color: "#FFF8E7",
+          color: "Maroon",
           boxShadow: "0 4px 8px rgba(0,0,0,0.15)",
           "&:hover": {
             transform: "scale(1.05)",
@@ -71,8 +71,8 @@ const theme = createTheme({
           },
         },
         containedPrimary: {
-          backgroundColor: "#800020",
-          color: "#FFF8E7",
+          backgroundColor: "Maroon",
+          color: "MintCream",
           "&:hover": { backgroundColor: "#4B0016" },
         },
         containedSecondary: {

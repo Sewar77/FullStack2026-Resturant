@@ -1,12 +1,13 @@
 import { AppBar, Button, Container, Toolbar, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../Context/UserContext.jsx";
+import { useContext } from "react";
 function Header() {
+  const { user, logout } = useContext(UserContext);
   const navigate = useNavigate();
   return (
     <>
-      <AppBar
-        position="sticky"
-      >
+      <AppBar position="sticky">
         <Toolbar
           sx={{
             display: "flex",
@@ -20,10 +21,18 @@ function Header() {
           <Container sx={{ display: "flex", gap: 3 }}>
             <Button>Home</Button>
             <Button>Menu</Button>
+            <Button>Dashboard</Button>
+            <Button>Profile</Button>
             <Button>Contact Us</Button>
             <Button>Reserve Noe</Button>
-            <Button onClick={() => navigate("/login")}>Login</Button>
-            <Button onClick={() => navigate("/register")}>Register</Button>
+            {user ? (
+              <Button onClick={logout}>Logout</Button>
+            ) : (
+              <>
+                <Button onClick={() => navigate("/login")}>Login</Button>
+                <Button onClick={() => navigate("/register")}>Register</Button>
+              </>
+            )}
           </Container>
         </Toolbar>
       </AppBar>

@@ -5,6 +5,6 @@ import { getAllMenuItemsController, getMenuItemController } from "../controllers
 const router = express.Router();
 
 router.get("/menu/:id", protect, getMenuItemController)
-router.get("/menu", protect, getAllMenuItemsController)
+router.get("/menu", getAllMenuItemsController)
 
 export default router
