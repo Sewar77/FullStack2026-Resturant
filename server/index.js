@@ -9,6 +9,8 @@ import helmet from "helmet"
 import { globalRateLimit } from "./src/middleware/globalRateLimit.Middleware.js";
 import bodyPrser from "body-parser"
 import cookieParser from "cookie-parser";
+import menuRoutes from "./src/routes/menu.Routes.js"
+import categoryRoutes from "./src/routes/category.Routes.js"
 dotenv.config()
 connectDB()
 
@@ -25,6 +27,8 @@ app.use(cookieParser())
 app.use(bodyPrser.urlencoded({ extended: true }))
 app.use('/api', authRoutes)
 app.use("/api", userRoutes)
+app.use('/api', menuRoutes)
+app.use('/api', categoryRoutes)
 app.use(errorHandler)
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`)

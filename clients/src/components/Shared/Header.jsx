@@ -4,7 +4,9 @@ function Header() {
   const navigate = useNavigate();
   return (
     <>
-      <AppBar position="sticky">
+      <AppBar
+        position="sticky"
+      >
         <Toolbar
           sx={{
             display: "flex",
