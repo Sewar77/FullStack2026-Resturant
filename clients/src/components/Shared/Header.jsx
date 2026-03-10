@@ -1,6 +1,7 @@
 import { AppBar, Button, Container, Toolbar, Typography } from "@mui/material";
-
+import { useNavigate } from "react-router-dom";
 function Header() {
+  const navigate = useNavigate();
   return (
     <>
       <AppBar position="sticky">
@@ -19,6 +20,8 @@ function Header() {
             <Button>Menu</Button>
             <Button>Contact Us</Button>
             <Button>Reserve Noe</Button>
+            <Button onClick={() => navigate("/login")}>Login</Button>
+            <Button onClick={() => navigate("/register")}>Register</Button>
           </Container>
         </Toolbar>
       </AppBar>

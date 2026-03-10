@@ -9,18 +9,17 @@ import {
 } from "@mui/material";
 import { UserContext } from "../../Context/UserContext.jsx";
 
-function Register() {
-  const { register } = useContext(UserContext);
+function Login() {
+  const { login } = useContext(UserContext);
 
   const [userData, setUserData] = useState({
-    name: "",
     email: "",
     password: "",
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    register(userData);
+    login(userData);
   };
 
   return (
@@ -34,7 +33,7 @@ function Register() {
         }}
       >
         <Typography variant="h4" textAlign="center" fontWeight="bold" mb={3}>
-          Create Account
+          Login
         </Typography>
 
         <Box
@@ -43,14 +42,6 @@ function Register() {
           display="flex"
           flexDirection="column"
         >
-          <TextField
-            label="Name"
-            fullWidth
-            margin="normal"
-            value={userData.name}
-            onChange={(e) => setUserData({ ...userData, name: e.target.value })}
-          />
-
           <TextField
             label="Email"
             type="email"
@@ -83,7 +74,7 @@ function Register() {
               fontWeight: "bold",
             }}
           >
-            Register
+            Login
           </Button>
         </Box>
       </Paper>
@@ -91,4 +82,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Login;

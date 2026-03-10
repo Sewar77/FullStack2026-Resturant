@@ -27,23 +27,24 @@ export const register = asyncHandler(async (req, res) => {
 
 export const login = asyncHandler(async (req, res) => {
     const { email, password } = req.validateData;
+    console.log(email, password)
     try {
         if (!email || !password) {
             const error = new Error("all fields are required!")
-            err.statusCode = 400
+            error.statusCode = 400
             throw error
         }
         const isUserExist = await findUserByEmail(email)
         if (!isUserExist) {
             const error = new Error("User not registered, please register to log in")
-            err.statusCode = 400
+            error.statusCode = 400
             throw error
         }
         const isMatch = await bcrypt.compare(password, isUserExist.hashed_password)
 
         if (!isMatch) {
             const error = new Error("password or email is incorrect")
-            err.statusCode = 400
+            error.statusCode = 400
             throw error
         }
         //generate tokens=> access, refresh

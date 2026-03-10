@@ -8,10 +8,11 @@ export function UserProvider({ children }) {
 
   const register = async (userData) => {
     try {
-      const res = await api.post("/auth/register", userData);
       if (!userData.name || !userData.email || !userData.password) {
         toast.error("All feilds are required");
       }
+      const res = await api.post("/auth/register", userData);
+
       console.log(res);
       setUser(res.data.user);
       toast.success(res.data.message || "Registeration Successfully");
@@ -20,14 +21,15 @@ export function UserProvider({ children }) {
       toast.error("Something went wrong");
     }
   };
-  const login = (userData) => {
+  const login = async (userData) => {
     try {
-      const res = api.post("/auth/login", userData);
-      if (!userData.email || !userData.hashed_password) {
+      if (!userData.email || !userData.password) {
         toast.error("All feilds are required");
       }
+      const res = await api.post("/auth/login", userData);
+      console.log(res);
       setUser(res.data.user);
-      toast.success(req.data.message || "Login Successfully");
+      toast.success(res.data.message || "Login Successfully");
     } catch (err) {
       console.log(err);
       toast.error("Something went wrong");
