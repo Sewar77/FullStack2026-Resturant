@@ -4,6 +4,7 @@ import LandingPage from "./components/Landing/LandingPage.jsx";
 import { Toaster } from "react-hot-toast";
 import { Route, Routes } from "react-router-dom";
 import Login from "./components/Auth/Login.jsx";
+import MenuDetails from "./components/Menu/MenuDetails.jsx";
 import Home from "./components/Home/Home.jsx";
 import ManagerDashboard from "./components/Manager/ManagerDashboard.jsx";
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/manager/dashboard" element={<ManagerDashboard />} />
         <Route path="/user-home" element={<Home />} />
+        <Route path="/menu-detail" element={<MenuDetails />} />
       </Routes>
     </>
   );

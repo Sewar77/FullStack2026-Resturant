@@ -11,9 +11,20 @@ import {
   Typography,
 } from "@mui/material";
 import Header from "../Shared/Header.jsx";
-function Home() {
-  const { menu } = useContext(MenuContext);
+import { useNavigate } from "react-router-dom";
 
+function Home() {
+  const { menu, getMenuItem } = useContext(MenuContext);
+  const navigate = useNavigate();
+  const handleViewDetails = (item) => {
+    getMenuItem(item.menuid);
+    console.log("item: ", item);
+    navigate("/menu-detail", {
+      state: {
+        item,
+      },
+    });
+  };
   console.log(menu);
 
   return (
@@ -46,7 +57,9 @@ function Home() {
                 </Typography>
                 <Stack direction="row">
                   <Button>Add To Cart</Button>
-                  <Button>View Details</Button>
+                  <Button onClick={() => handleViewDetails(item)}>
+                    View Details
+                  </Button>
                 </Stack>
               </CardContent>
             </Card>
@@ -58,3 +71,5 @@ function Home() {
 }
 
 export default Home;
+
+//best practice || clean code

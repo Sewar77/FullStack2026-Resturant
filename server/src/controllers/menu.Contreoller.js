@@ -15,7 +15,8 @@ export const getAllMenuItemsController = asyncHandler(async (req, res) => {
 })
 
 export const getMenuItemController = asyncHandler(async (req, res) => {
-    const menuId = req.params
+    const menuId = req.params.id
+    console.log(menuId)
     try {
         const result = await getMenuItem(menuId)
         if (result.length === 0) {
