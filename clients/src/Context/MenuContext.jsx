@@ -5,6 +5,7 @@ export const MenuContext = createContext();
 
 export function MenuProvider({ children }) {
   const [menu, setMenu] = useState([]);
+  const [loading, setLoading] = useState(true);
   const fetchMenu = async () => {
     try {
       const res = await api.get("/menu");
@@ -16,6 +17,8 @@ export function MenuProvider({ children }) {
       toast.success("Happy meal!");
     } catch (err) {
       toast.error("something went error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -34,7 +37,7 @@ export function MenuProvider({ children }) {
 
   return (
     <>
-      <MenuContext.Provider value={{ menu, getMenuItem, fetchMenu }}>
+      <MenuContext.Provider value={{ menu, getMenuItem, fetchMenu, loading }}>
         {children}
       </MenuContext.Provider>
     </>

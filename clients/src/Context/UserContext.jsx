@@ -8,17 +8,24 @@ export const UserContext = createContext();
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const currentUser = async () => {
     try {
       const res = await api.get("/auth/me");
       setUser(res.data.me);
+      console.log("from context", res.data.me);
     } catch (err) {
       console.log("not logged in");
       setUser(null);
+    } finally {
+      setLoading(false);
     }
   };
+  useEffect(() => {
+    currentUser();
+  }, []);
 
   const allUsers = async () => {
     try {
@@ -58,8 +65,8 @@ export function UserProvider({ children }) {
       const res = await api.post("/auth/login", userData);
       toast.success(res.data.message || "Login Successful");
       await currentUser();
-      if (user.role === "manager") navigate("/manager/dashboard");
-      if (user.role === "user") navigate("/user-home");
+      if (res.data.user.role === "manager") navigate("/manager/dashboard");
+      if (res.data.user.role === "user") navigate("/user-home");
     } catch (err) {
       console.log(err);
       toast.error(err.response?.data?.message || "Login failed");
@@ -86,15 +93,24 @@ export function UserProvider({ children }) {
       toast.error("Logout failed");
     }
   };
-  useEffect(() => {
-    currentUser();
-  }, []);
 
   return (
     <UserContext.Provider
-      value={{ user, register, login, logout, users, allUsers, deleteUser }}
+      value={{
+        user,
+        register,
+        login,
+        logout,
+        users,
+        allUsers,
+        deleteUser,
+        loading,
+        currentUser,
+      }}
     >
       {children}
     </UserContext.Provider>
   );
 }
+
+export const userAuth = () => useContext(UserContext);

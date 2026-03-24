@@ -14,10 +14,11 @@ import Header from "../Shared/Header.jsx";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 function Home() {
-  const { menu, getMenuItem, fetchMenu } = useContext(MenuContext);
+  const { menu, getMenuItem, fetchMenu, loading } = useContext(MenuContext);
   useEffect(() => {
     fetchMenu();
   }, []);
+
   const navigate = useNavigate();
   const handleViewDetails = (item) => {
     getMenuItem(item.menuid);
@@ -29,7 +30,9 @@ function Home() {
     });
   };
   console.log(menu);
-
+  if (loading) {
+    return <Typography>Loading...</Typography>;
+  }
   return (
     <>
       <Header />

@@ -15,7 +15,6 @@
     "@mui/icons-material": "^7.3.9",
     "@mui/material": "^7.3.9",
     "axios": "^1.13.6",
-    "js-cookie": "^3.0.5",
     "mui-image": "^1.0.9",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
