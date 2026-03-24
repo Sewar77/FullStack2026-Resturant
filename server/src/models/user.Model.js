@@ -13,7 +13,7 @@ export const findUserByEmail = async (email) => {
 }
 
 export const getAllUsers = async () => {
-    const result = await pool.query(`select userid, name, email, role from users`)
+    const result = await pool.query(`select userid, name, email, role, created_at from users`)
     return result.rows
 }
 

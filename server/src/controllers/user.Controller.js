@@ -37,3 +37,14 @@ export const findUserByEmailController = asyncHandler(async (req, res) => {
         return res.status(500).json({ message: "internal server error" })
     }
 })
+
+export const deleteUserByIdController = asyncHandler(async (req, res) => {
+    const userid = req.params.id
+    console.log("userid: ", userid)
+    try {
+        await deleteUserById(userid)
+        return res.status(200).json({ message: "user deleted seccessffully " })
+    } catch (err) {
+        return res.status(500).json({ message: "internal server error" })
+    }
+})

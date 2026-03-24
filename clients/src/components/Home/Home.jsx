@@ -12,9 +12,12 @@ import {
 } from "@mui/material";
 import Header from "../Shared/Header.jsx";
 import { useNavigate } from "react-router-dom";
-
+import { useEffect } from "react";
 function Home() {
-  const { menu, getMenuItem } = useContext(MenuContext);
+  const { menu, getMenuItem, fetchMenu } = useContext(MenuContext);
+  useEffect(() => {
+    fetchMenu();
+  }, []);
   const navigate = useNavigate();
   const handleViewDetails = (item) => {
     getMenuItem(item.menuid);

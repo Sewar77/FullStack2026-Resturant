@@ -32,12 +32,9 @@ export function MenuProvider({ children }) {
     }
   };
 
-  useEffect(() => {
-    fetchMenu();
-  }, []);
   return (
     <>
-      <MenuContext.Provider value={{ menu, getMenuItem }}>
+      <MenuContext.Provider value={{ menu, getMenuItem, fetchMenu }}>
         {children}
       </MenuContext.Provider>
     </>

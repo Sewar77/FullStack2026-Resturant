@@ -2,8 +2,8 @@
 export const setAccessTokenCookie = (res, token) => {
     res.cookie("accessToken", token, {
         httpOnly: true,
-        secure: true,
-        sameSite: "strict",
+        secure: false, //true in development, but false in production
+        sameSite: "Lax",
         maxAge: 24 * 60 * 60 * 1000
     })
 }
@@ -11,8 +11,8 @@ export const setAccessTokenCookie = (res, token) => {
 export const setRefreshTokenCookie = (res, token) => {
     res.cookie("refreshTokens", token, {
         httpOnly: true,
-        secure: true,
-        sameSite: "strict",
+        secure: false,
+        sameSite: "Lax",
         maxAge: 24 * 60 * 60 * 1000
     })
 }

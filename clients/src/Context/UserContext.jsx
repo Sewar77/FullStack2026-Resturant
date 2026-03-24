@@ -7,6 +7,7 @@ export const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
   const currentUser = async () => {
@@ -19,10 +20,20 @@ export function UserProvider({ children }) {
     }
   };
 
-  useEffect(() => {
-    currentUser();
-  }, []);
-
+  const allUsers = async () => {
+    try {
+      const res = await api.get("/users");
+      if (res.data.users.length === 0) {
+        toast.success(res.data.message || "No users Yet");
+      }
+      toast.success(res.data.message);
+      setUsers(res.data.users);
+      console.log(res.data.users);
+    } catch (err) {
+      console.log(err);
+      toast.error(err.response?.data?.message || "Something went wrong");
+    }
+  };
   const register = async (userData) => {
     try {
       if (!userData.name || !userData.email || !userData.password) {
@@ -54,7 +65,16 @@ export function UserProvider({ children }) {
       toast.error(err.response?.data?.message || "Login failed");
     }
   };
-
+  const deleteUser = async (userId) => {
+    try {
+      const res = await api.delete(`/user/delete/${userId}`);
+      toast.success(res.data.message || "deleted Successful");
+      await allUsers();
+    } catch (err) {
+      console.log(err);
+      toast.error(err.response?.data?.message || "delete failed");
+    }
+  };
   const logout = async () => {
     try {
       await api.post("/auth/logout");
@@ -66,9 +86,14 @@ export function UserProvider({ children }) {
       toast.error("Logout failed");
     }
   };
+  useEffect(() => {
+    currentUser();
+  }, []);
 
   return (
-    <UserContext.Provider value={{ user, register, login, logout }}>
+    <UserContext.Provider
+      value={{ user, register, login, logout, users, allUsers, deleteUser }}
+    >
       {children}
     </UserContext.Provider>
   );
