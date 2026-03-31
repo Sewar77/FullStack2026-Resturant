@@ -51,7 +51,9 @@ function Sidebar({ toggleSidebar, open }) {
             <ListItemButton onClick={() => navigate("/manage-users")}>
               <ListItemText primary={open ? "Users" : "U"} />
             </ListItemButton>
-
+            <ListItemButton onClick={() => navigate("/manage-categories")}>
+              <ListItemText primary={open ? "Categories" : "C"} />
+            </ListItemButton>
             <ListItemButton onClick={() => navigate("/orders")}>
               <ListItemText primary={open ? "Orders" : "O"} />
             </ListItemButton>

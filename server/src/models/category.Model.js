@@ -9,3 +9,8 @@ export const getCategory = async (catId) => {
     const result = await pool.query('select * from categories where catid = $1', [catId])
     return result.rows[0]
 }
+
+export const createCategory = async (name, description) => {
+    const result = await pool.query('insert into categories(name, description) value($1, $2) returning *', [name, description])
+    return result.rows[0]
+}

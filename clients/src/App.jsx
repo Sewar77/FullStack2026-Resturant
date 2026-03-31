@@ -8,6 +8,7 @@ import MenuDetails from "./components/Menu/MenuDetails.jsx";
 import Home from "./components/Home/Home.jsx";
 import ManagerDashboard from "./components/Manager/ManagerDashboard.jsx";
 import ManageUsers from "../src/components/Manager/ManageUsers/ManageUsers.jsx";
+import ManageCategories from "../src/components/Manager/ManageCategories/ManageCategories.jsx";
 import ProtectedRoutes from "./Routes/ProtectedRoutes.jsx";
 import ManagerProtectRoutes from "./Routes/ManagerProtectedRoutes.jsx";
 import UserProtectRoutes from "./Routes/UserProtectRoutes.jsx";
@@ -37,6 +38,7 @@ function App() {
           }
         />
         <Route path="/Manage-Users" element={<ManageUsers />} />
+        <Route path="/Manage-Categories" element={<ManageCategories />} />
 
         <Route
           path="/user-home"
