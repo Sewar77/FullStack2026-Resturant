@@ -1,9 +1,8 @@
 import { AppBar, Button, Container, Toolbar, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../Context/UserContext.jsx";
-import { useContext } from "react";
+import { useAuth } from "../../Hooks/useAuth";
 function Header() {
-  const { user, logout } = useContext(UserContext);
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   return (
     <>

@@ -1,8 +1,8 @@
 import { Navigate } from "react-router-dom";
-import { userAuth } from "../Context/UserContext.jsx";
 import { Typography } from "@mui/material";
+import { useAuth } from "../Hooks/useAuth.js";
 function ProtectedRoutes({ children }) {
-  const { user, loading } = userAuth();
+  const { user, loading } = useAuth();
   console.log("user from protected routes", user);
   if (loading) {
     return <Typography>loading...</Typography>;

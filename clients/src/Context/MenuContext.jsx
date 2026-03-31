@@ -1,8 +1,7 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import toast from "react-hot-toast";
 import api from "../api.js";
 export const MenuContext = createContext();
-
 export function MenuProvider({ children }) {
   const [menu, setMenu] = useState([]);
   const [loading, setLoading] = useState(true);

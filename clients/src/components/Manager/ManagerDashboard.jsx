@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 function ManagerDashboard() {
   const [open, setOpen] = useState(true);
-
   const toggleSideBar = () => {
     setOpen(!open);
   };

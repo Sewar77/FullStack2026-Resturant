@@ -8,13 +8,10 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../../Context/UserContext.jsx";
-import { useContext } from "react";
-
+import { useAuth } from "../../../Hooks/useAuth";
 function Sidebar({ toggleSidebar, open }) {
   const navigate = useNavigate();
-  const { user, logout } = useContext(UserContext);
-
+  const { user, logout } = useAuth();
   return (
     <Box
       sx={{

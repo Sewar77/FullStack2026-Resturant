@@ -1,16 +1,13 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import api from "../api.js"; // axios instance with withCredentials: true
 import { useNavigate } from "react-router-dom";
-
 export const UserContext = createContext();
-
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
   const currentUser = async () => {
     try {
       const res = await api.get("/auth/me");
@@ -26,14 +23,13 @@ export function UserProvider({ children }) {
   useEffect(() => {
     currentUser();
   }, []);
-
   const allUsers = async () => {
     try {
       const res = await api.get("/users");
       if (res.data.users.length === 0) {
         toast.success(res.data.message || "No users Yet");
       }
-      toast.success(res.data.message);
+      // toast.success(res.data.message);
       setUsers(res.data.users);
       console.log(res.data.users);
     } catch (err) {
@@ -55,7 +51,20 @@ export function UserProvider({ children }) {
       toast.error(err.response?.data?.message || "Something went wrong");
     }
   };
-
+  const addUser = async (userData) => {
+    try {
+      if (!userData.name || !userData.email || !userData.password) {
+        toast.error("All fields are required");
+        return;
+      }
+      const res = await api.post("/auth/register", userData);
+      await allUsers();
+      toast.success("User Added Successfully Successful");
+    } catch (err) {
+      console.log(err);
+      toast.error(err.response?.data?.message || "Something went wrong");
+    }
+  };
   const login = async (userData) => {
     try {
       if (!userData.email || !userData.password) {
@@ -93,7 +102,6 @@ export function UserProvider({ children }) {
       toast.error("Logout failed");
     }
   };
-
   return (
     <UserContext.Provider
       value={{
@@ -106,11 +114,10 @@ export function UserProvider({ children }) {
         deleteUser,
         loading,
         currentUser,
+        addUser,
       }}
     >
       {children}
     </UserContext.Provider>
   );
 }
-
-export const userAuth = () => useContext(UserContext);

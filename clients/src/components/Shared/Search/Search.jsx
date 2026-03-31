@@ -1,5 +1,4 @@
 import { Stack, TextField } from "@mui/material";
-
 function Search({ search, setSearch, label }) {
   return (
     <>

@@ -1,5 +1,4 @@
 import { createTheme } from "@mui/material/styles";
-
 const theme = createTheme({
   palette: {
     mode: "dark",
@@ -21,16 +20,13 @@ const theme = createTheme({
       primary: "#F8FAFC",
       secondary: "#94A3B8",
     },
-
     success: {
       main: "#22C55E",
     },
-
     error: {
       main: "#EF4444",
     },
   },
-
   typography: {
     fontFamily: `"Poppins", "Inter", sans-serif`,
 
