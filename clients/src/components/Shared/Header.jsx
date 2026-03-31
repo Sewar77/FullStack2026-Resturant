@@ -21,7 +21,7 @@ function Header() {
             <Button>Home</Button>
             <Button>Menu</Button>
             <Button>Dashboard</Button>
-            <Button>Profile</Button>
+            <Button onClick={() => navigate("/profile")}>Profile</Button>
             <Button>Contact Us</Button>
             <Button>Reserve Noe</Button>
             {user ? (

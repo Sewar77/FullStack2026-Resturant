@@ -12,6 +12,7 @@ import ManageCategories from "../src/components/Manager/ManageCategories/ManageC
 import ProtectedRoutes from "./Routes/ProtectedRoutes.jsx";
 import ManagerProtectRoutes from "./Routes/ManagerProtectedRoutes.jsx";
 import UserProtectRoutes from "./Routes/UserProtectRoutes.jsx";
+import Profile from "./components/Profile/Profile.jsx";
 function App() {
   return (
     <>
@@ -37,8 +38,26 @@ function App() {
             </ProtectedRoutes>
           }
         />
-        <Route path="/Manage-Users" element={<ManageUsers />} />
-        <Route path="/Manage-Categories" element={<ManageCategories />} />
+        <Route
+          path="/Manage-Users"
+          element={
+            <ProtectedRoutes>
+              <ManagerProtectRoutes>
+                <ManageUsers />
+              </ManagerProtectRoutes>
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/Manage-Categories"
+          element={
+            <ProtectedRoutes>
+              <ManagerProtectRoutes>
+                <ManageCategories />
+              </ManagerProtectRoutes>
+            </ProtectedRoutes>
+          }
+        />
 
         <Route
           path="/user-home"
@@ -57,6 +76,14 @@ function App() {
               <UserProtectRoutes>
                 <MenuDetails />
               </UserProtectRoutes>
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoutes>
+              <Profile />
             </ProtectedRoutes>
           }
         />

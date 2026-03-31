@@ -102,6 +102,7 @@ export function UserProvider({ children }) {
       toast.error("Logout failed");
     }
   };
+  const updateUserProfile = async (userData) => {};
   return (
     <UserContext.Provider
       value={{

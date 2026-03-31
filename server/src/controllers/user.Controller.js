@@ -48,3 +48,47 @@ export const deleteUserByIdController = asyncHandler(async (req, res) => {
         return res.status(500).json({ message: "internal server error" })
     }
 })
+
+export const updateUser = asyncHandler(async (req, res) => {
+    const userId = req.user.id
+    console.log(userId);
+    const { name, email } = req.body
+    try {
+        if (!name && !email) {
+            return res.status(200).json({ message: "No Changes" })
+        }
+        const isExist = await findUserByEmail(email)
+        if (isExist) {
+            return res.status(400).json({ message: "You cant use this email, its already exist!" })
+        }
+        const user = await getUserById(userId)
+        let updatedFields = {}
+        if (name && name !== user.name) {
+            updatedFields.name = name
+        }
+        if (email && email !== user.email) {
+            updatedFields.email = email
+        }
+        if (Object.keys(updatedFields).length === 0) {
+            return res.status(200).json({ message: "No Changes detected" })
+        }
+        await updateUserById(userId, updatedFields)
+        return res.status(200).json({ message: "user updated seccessffully " })
+    } catch (err) {
+        return res.status(500).json({ message: "internal server error" })
+    }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
