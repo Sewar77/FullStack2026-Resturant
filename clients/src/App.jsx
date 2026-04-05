@@ -18,14 +18,7 @@ function App() {
     <>
       <Toaster position="top-center" />
       <Routes>
-        <Route
-          path="/"
-          element={
-            <ProtectedRoutes>
-              <LandingPage />
-            </ProtectedRoutes>
-          }
-        />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route

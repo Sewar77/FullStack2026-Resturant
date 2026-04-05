@@ -17,15 +17,20 @@ export const getAllUsers = async () => {
     return result.rows
 }
 
-export const updateUserById = async (userid, name, email) => {
+export const updateUserById = async (userid, updatedFields) => {
+    console.log("userid, name, email", userid, updatedFields);
     const result = await pool.query(`update users set name = $1, 
         email = $2
-        where userid = $2 returning userid, name, email
-        `, [name, email, userid])
+        where userid = $3 returning userid, name, email
+        `, [updatedFields.name, updatedFields.email, userid])
+    console.log("here");
+
     return result.rows[0]
 }
 
 export const deleteUserById = async (userid) => {
+    console.log(userid);
+
     await pool.query(`delete from users where userid=$1`, [userid])
 }
 

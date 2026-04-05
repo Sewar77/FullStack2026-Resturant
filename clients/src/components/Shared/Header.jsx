@@ -1,4 +1,4 @@
-import { AppBar, Button, Container, Toolbar, Typography } from "@mui/material";
+import { AppBar, Button, Box, Toolbar, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Hooks/useAuth";
 function Header() {
@@ -10,32 +10,34 @@ function Header() {
         <Toolbar
           sx={{
             display: "flex",
-            minWidth: "100%",
             flexDirection: "row",
             justifyContent: "space-between",
             gap: 5,
           }}
         >
           <Typography variant="h3">Resturant</Typography>
-          <Container sx={{ display: "flex", gap: 3 }}>
-            <Button>Home</Button>
+          <Box sx={{ display: "flex", gap: 3 }}>
+            <Button onClick={() => navigate("/user-home")}>Home</Button>
             <Button>Menu</Button>
-            <Button>Dashboard</Button>
-            <Button onClick={() => navigate("/profile")}>Profile</Button>
             <Button>Contact Us</Button>
-            <Button>Reserve Noe</Button>
+            <Button>Reserve Now</Button>
             {user ? (
-              <Button onClick={logout}>Logout</Button>
+              <>
+                <Button>Dashboard</Button>
+                <Button onClick={() => navigate("/profile")}>Profile</Button>
+                <Button onClick={logout}>Logout</Button>
+              </>
             ) : (
               <>
                 <Button onClick={() => navigate("/login")}>Login</Button>
                 <Button onClick={() => navigate("/register")}>Register</Button>
               </>
             )}
-          </Container>
+          </Box>
         </Toolbar>
       </AppBar>
     </>
   );
 }
 export default Header;
+//home, dashboard, contact us, ordered now => backend and front end in user dashboard => next time 7/4/2026

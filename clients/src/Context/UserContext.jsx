@@ -102,7 +102,21 @@ export function UserProvider({ children }) {
       toast.error("Logout failed");
     }
   };
-  const updateUserProfile = async (userData) => {};
+  const updateUserProfile = async (userData) => {
+    try {
+      if (!userData.name) {
+        userData.name = user.name;
+      }
+      if (!userData.email) {
+        userData.email = user.email;
+      }
+      const res = await api.put("/user/update-info", userData);
+      toast.success(res.data.message);
+      await currentUser();
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <UserContext.Provider
       value={{
@@ -115,6 +129,7 @@ export function UserProvider({ children }) {
         deleteUser,
         loading,
         currentUser,
+        updateUserProfile,
         addUser,
       }}
     >
