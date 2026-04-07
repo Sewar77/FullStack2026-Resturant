@@ -37,7 +37,7 @@ function Sidebar({ toggleSidebar, open }) {
 
       <List>
         {/* DASHBOARD */}
-        <ListItemButton onClick={() => navigate("/dashboard")}>
+        <ListItemButton onClick={() => navigate("/manager/dashboard")}>
           <ListItemText primary={open ? "Dashboard" : "D"} />
         </ListItemButton>
 
@@ -47,11 +47,10 @@ function Sidebar({ toggleSidebar, open }) {
             <ListItemButton onClick={() => navigate("/manage-menu")}>
               <ListItemText primary={open ? "Manage Menu" : "M"} />
             </ListItemButton>
-
-            <ListItemButton onClick={() => navigate("/manage-users")}>
+            <ListItemButton onClick={() => navigate("/manager/users")}>
               <ListItemText primary={open ? "Users" : "U"} />
             </ListItemButton>
-            <ListItemButton onClick={() => navigate("/manage-categories")}>
+            <ListItemButton onClick={() => navigate("/manager/caregories")}>
               <ListItemText primary={open ? "Categories" : "C"} />
             </ListItemButton>
             <ListItemButton onClick={() => navigate("/orders")}>

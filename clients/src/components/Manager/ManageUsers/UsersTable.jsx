@@ -35,11 +35,15 @@ function UsersTable({ search }) {
       fontWeight: "bold",
       fontSize: "30px",
       color: "white",
+      alignItems: "center",
+      textAlign: "center",
     },
     action: {
       direction: "row",
       spacing: 1,
       justifyContent: "center",
+      alignItems: "center",
+      textAlign: "center",
     },
   };
   return (

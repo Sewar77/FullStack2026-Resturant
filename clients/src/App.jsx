@@ -13,6 +13,7 @@ import ProtectedRoutes from "./Routes/ProtectedRoutes.jsx";
 import ManagerProtectRoutes from "./Routes/ManagerProtectedRoutes.jsx";
 import UserProtectRoutes from "./Routes/UserProtectRoutes.jsx";
 import UserProfile from "./Pages/Profile/Profile.jsx";
+import ManagerLayout from "./components/Manager/ManagerLayout.jsx";
 function App() {
   return (
     <>
@@ -21,37 +22,22 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        {/* manager routes */}
         <Route
-          path="/manager/dashboard"
+          path="/manager"
           element={
             <ProtectedRoutes>
               <ManagerProtectRoutes>
-                <ManagerDashboard />
+                <ManagerLayout />
               </ManagerProtectRoutes>
             </ProtectedRoutes>
           }
-        />
-        <Route
-          path="/Manage-Users"
-          element={
-            <ProtectedRoutes>
-              <ManagerProtectRoutes>
-                <ManageUsers />
-              </ManagerProtectRoutes>
-            </ProtectedRoutes>
-          }
-        />
-        <Route
-          path="/Manage-Categories"
-          element={
-            <ProtectedRoutes>
-              <ManagerProtectRoutes>
-                <ManageCategories />
-              </ManagerProtectRoutes>
-            </ProtectedRoutes>
-          }
-        />
-
+        >
+          <Route path="users" element={<ManageUsers />} />
+          <Route path="caregories" element={<ManageCategories />} />
+          <Route path="dashboard" element={<ManagerDashboard />} />
+        </Route>
+        {/* user routes */}
         <Route
           path="/user-home"
           element={
