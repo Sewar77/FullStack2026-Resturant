@@ -12,7 +12,7 @@ import ManageCategories from "../src/components/Manager/ManageCategories/ManageC
 import ProtectedRoutes from "./Routes/ProtectedRoutes.jsx";
 import ManagerProtectRoutes from "./Routes/ManagerProtectedRoutes.jsx";
 import UserProtectRoutes from "./Routes/UserProtectRoutes.jsx";
-import Profile from "./components/Profile/Profile.jsx";
+import UserProfile from "./Pages/Profile/Profile.jsx";
 function App() {
   return (
     <>
@@ -76,7 +76,7 @@ function App() {
           path="/profile"
           element={
             <ProtectedRoutes>
-              <Profile />
+              <UserProfile />
             </ProtectedRoutes>
           }
         />

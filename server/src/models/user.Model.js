@@ -17,6 +17,11 @@ export const getAllUsers = async () => {
     return result.rows
 }
 
+export const changePassword = async (userId, hashed_password) => {
+    const result = await pool.query(`update users set hashed_password = $1 where userid = $2`, [hashed_password, userId])
+    return result.rows[0]
+}
+
 export const updateUserById = async (userid, updatedFields) => {
     console.log("userid, name, email", userid, updatedFields);
     const result = await pool.query(`update users set name = $1, 
@@ -38,3 +43,4 @@ export const deleteUserById = async (userid) => {
 export const saveRefreshToken = async (userid, refreshToken) => {
     await pool.query(`update users set refresh_token = $1 where userid = $2`, [refreshToken, userid])
 }
+

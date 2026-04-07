@@ -117,6 +117,26 @@ export function UserProvider({ children }) {
       console.log(err);
     }
   };
+  const changeUserPassword = async (passwords) => {
+    try {
+      if (
+        !passwords.oldPassword ||
+        !passwords.newPassword ||
+        !passwords.confirmNewPassword
+      ) {
+        toast.error("Please fill all required fields!");
+        return;
+      }
+      if (passwords.newPassword !== passwords.confirmNewPassword) {
+        toast.error("New Passwords must match!");
+        return;
+      }
+      const res = await api.put("/user/change-password", passwords);
+      toast.success(res.data.message || "Changed succeddfylly");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <UserContext.Provider
       value={{
@@ -131,6 +151,7 @@ export function UserProvider({ children }) {
         currentUser,
         updateUserProfile,
         addUser,
+        changeUserPassword,
       }}
     >
       {children}
