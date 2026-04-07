@@ -11,6 +11,8 @@ import bodyPrser from "body-parser"
 import cookieParser from "cookie-parser";
 import menuRoutes from "./src/routes/menu.Routes.js"
 import categoryRoutes from "./src/routes/category.Routes.js"
+import tablesRoutes from "./src/routes/tables.Routes.js"
+import reservationsRoutes from "./src/routes/reservations.Routes.js"
 dotenv.config()
 connectDB()
 
@@ -29,6 +31,8 @@ app.use('/api', authRoutes)
 app.use("/api", userRoutes)
 app.use('/api', menuRoutes)
 app.use('/api', categoryRoutes)
+app.use('/api', tablesRoutes)
+app.use('/api', reservationsRoutes)
 app.use(errorHandler)
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`)

@@ -22,7 +22,17 @@ function Header() {
         >
           <Typography variant="h3">Resturant</Typography>
           <Box sx={{ display: "flex", gap: 3 }}>
+<<<<<<< HEAD
             {user && user.role === "user" && (
+=======
+            <Button onClick={() => navigate("/")}>Home</Button>
+            <Button>Menu</Button>
+            <Button>Contact Us</Button>
+            <Button onClick={() => navigate("/reservations")}>
+              Reserve Now
+            </Button>
+            {user ? (
+>>>>>>> 2cdaf56a2dd2b10b74b9f6a751433e524d5a48ca
               <>
                 <Button onClick={() => navigate("/user-home")}>Home</Button>
                 <Button>Menu</Button>
