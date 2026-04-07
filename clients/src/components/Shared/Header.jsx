@@ -22,20 +22,35 @@ function Header() {
         >
           <Typography variant="h3">Resturant</Typography>
           <Box sx={{ display: "flex", gap: 3 }}>
-            <Button onClick={() => navigate("/user-home")}>Home</Button>
-            <Button>Menu</Button>
-            <Button>Contact Us</Button>
-            <Button>Reserve Now</Button>
-            {user ? (
+            {user && user.role === "user" && (
               <>
+                <Button onClick={() => navigate("/user-home")}>Home</Button>
+                <Button>Menu</Button>
+                <Button>Contact Us</Button>
+                <Button>Reserve Now</Button>
                 <Button>Dashboard</Button>
                 <Button onClick={() => navigate("/profile")}>Profile</Button>
                 <Button onClick={logout}>Logout</Button>
               </>
-            ) : (
+            )}
+
+            {user && user.role === "manager" && (
               <>
+                <Button>Messages</Button>
+                <Button>Reservations</Button>
+                <Button onClick={() => navigate("/profile")}>Profile</Button>
+                <Button onClick={logout}>Logout</Button>
+              </>
+            )}
+            {!user && (
+              <>
+                <Button onClick={() => navigate("/")}>Home</Button>
                 <Button onClick={() => navigate("/login")}>Login</Button>
                 <Button onClick={() => navigate("/register")}>Register</Button>
+                <Button onClick={() => navigate("/contact-us")}>
+                  Contact Us
+                </Button>
+                <Button onClick={() => navigate("/login")}>Reserve Now</Button>
               </>
             )}
           </Box>
