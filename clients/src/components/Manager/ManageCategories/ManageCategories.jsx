@@ -37,9 +37,21 @@ function ManageCategories() {
               <CardContent>
                 <Typography variant="h3">{category.name}</Typography>
                 <Typography variant="body1">{category.description}</Typography>
-                <Stack>
-                  <Button>Delete</Button>
-                  <Button>Edit</Button>
+                <Stack
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: 3,
+                    justifyContent: "space-between",
+                    m: 3,
+                  }}
+                >
+                  <Button variant="contained" color="info">
+                    Delete
+                  </Button>
+                  <Button variant="contained" color="error">
+                    Edit
+                  </Button>
                 </Stack>
               </CardContent>
             </Card>

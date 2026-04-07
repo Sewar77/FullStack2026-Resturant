@@ -14,6 +14,7 @@ import ManagerProtectRoutes from "./Routes/ManagerProtectedRoutes.jsx";
 import UserProtectRoutes from "./Routes/UserProtectRoutes.jsx";
 import UserProfile from "./Pages/Profile/Profile.jsx";
 import ManagerLayout from "./components/Manager/ManagerLayout.jsx";
+import ManageMenu from "./components/Manager/ManageMenu/ManageMenu.jsx";
 function App() {
   return (
     <>
@@ -36,6 +37,7 @@ function App() {
           <Route path="users" element={<ManageUsers />} />
           <Route path="caregories" element={<ManageCategories />} />
           <Route path="dashboard" element={<ManagerDashboard />} />
+          <Route path="menu" element={<ManageMenu />} />
         </Route>
         {/* user routes */}
         <Route

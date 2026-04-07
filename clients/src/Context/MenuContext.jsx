@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import api from "../api.js";
 export const MenuContext = createContext();
@@ -11,7 +11,6 @@ export function MenuProvider({ children }) {
       if (res.data.menu.length === 0) {
         toast.success("No Menu Yet, Explore to find more.");
       }
-      console.log(res);
       setMenu(res.data.menu);
       toast.success("Happy meal!");
     } catch (err) {
@@ -20,7 +19,6 @@ export function MenuProvider({ children }) {
       setLoading(false);
     }
   };
-
   const getMenuItem = async (menuId) => {
     try {
       const res = await api.get(`/menu/${menuId}`);
@@ -33,6 +31,9 @@ export function MenuProvider({ children }) {
       toast.error("something went error");
     }
   };
+  useEffect(() => {
+    fetchMenu();
+  }, []);
 
   return (
     <>

@@ -44,7 +44,7 @@ function Sidebar({ toggleSidebar, open }) {
         {/* MANAGER */}
         {user?.role === "manager" && (
           <>
-            <ListItemButton onClick={() => navigate("/manage-menu")}>
+            <ListItemButton onClick={() => navigate("/manager/menu")}>
               <ListItemText primary={open ? "Manage Menu" : "M"} />
             </ListItemButton>
             <ListItemButton onClick={() => navigate("/manager/users")}>
