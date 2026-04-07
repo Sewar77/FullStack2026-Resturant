@@ -37,3 +37,8 @@ export const createReservation = async (
     );
     return result.rows[0];
 };
+
+export const getAllReservations = async () => {
+    const result = await pool.query("select * from reservation")
+    return result.rows
+}

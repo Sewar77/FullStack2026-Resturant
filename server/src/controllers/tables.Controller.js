@@ -1,7 +1,6 @@
-import { createTable, getTableByNumber } from "../models/tables.Model.js";
-
-
-export const createTableController = async (req, res) => {
+import { createTable, getAllTables, getTableById, getTableByNumber } from "../models/tables.Model.js";
+import { asyncHandler } from "../middleware/asyncHandler.Middleware.js"
+export const createTableController = asyncHandler(async (req, res) => {
     const { table_number, capacity, floor } = req.body
     try {
         if (!table_number || !capacity || !floor) {
@@ -25,5 +24,31 @@ export const createTableController = async (req, res) => {
     } catch (err) {
         return res.status(500).json({ message: "Internal server errro in create new table" })
     }
-}
+})
+
+export const getAllTablesController = asyncHandler(async (req, res) => {
+    try {
+        const tables = await getAllTables()
+        if (tables.length === 0) {
+            return res.status(200).json({ message: "No Tables Found", tables: [] })
+        }
+        return res.status(200).json({ message: "Fetshced susseccfully", tables })
+
+    } catch (err) {
+        return res.status(500).json({ message: "Internal server errro in create new table" })
+    }
+})
+export const getTableByIdController = asyncHandler(async (req, res) => {
+    const tableId = req.params.id
+    try {
+        const table = await getTableById(tableId)
+        if (!table) {
+            return res.status(404).json({ message: "No Table Found" })
+        }
+        return res.status(200).json({ message: "Fetshced susseccfully", table })
+
+    } catch (err) {
+        return res.status(500).json({ message: "Internal server errro in create new table" })
+    }
+})
 

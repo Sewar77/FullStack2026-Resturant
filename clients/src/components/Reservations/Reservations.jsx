@@ -10,7 +10,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-
 function Reservations() {
   const floorNumber = [1, 2, 3, 4, 5];
   return (
@@ -57,5 +56,4 @@ function Reservations() {
     </>
   );
 }
-
 export default Reservations;
