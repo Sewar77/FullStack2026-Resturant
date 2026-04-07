@@ -17,10 +17,12 @@ function Header() {
         >
           <Typography variant="h3">Resturant</Typography>
           <Box sx={{ display: "flex", gap: 3 }}>
-            <Button onClick={() => navigate("/user-home")}>Home</Button>
+            <Button onClick={() => navigate("/")}>Home</Button>
             <Button>Menu</Button>
             <Button>Contact Us</Button>
-            <Button>Reserve Now</Button>
+            <Button onClick={() => navigate("/reservations")}>
+              Reserve Now
+            </Button>
             {user ? (
               <>
                 <Button>Dashboard</Button>

@@ -101,3 +101,30 @@ select * from menu
 alter table menu add column created_at timestamp default current_timestamp
 
 
+
+create table tables (
+id serial PRIMARY KEY,
+table_number int not null unique,
+capacity int not null, 
+floor int null, 
+created_at timestamp default current_timestamp
+)
+
+create table reservation(
+id serial PRIMARY KEY,
+user_id int references users(userid) on delete set null, 
+table_id int references tables(id) on delete set null, 
+full_name varchar(200) not null, 
+email varchar(100) not null, 
+phone varchar(20) not null, 
+guests_number int not null, 
+reservation_date date not null, 
+reservation_time time not null, 
+requests text, 
+status text check (status In('pending', 'approved', 'rejected')) default 'pending' ,
+created_at timestamp default current_timestamp
+);
+
+
+select * from reservation
+

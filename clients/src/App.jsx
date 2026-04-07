@@ -13,6 +13,7 @@ import ProtectedRoutes from "./Routes/ProtectedRoutes.jsx";
 import ManagerProtectRoutes from "./Routes/ManagerProtectedRoutes.jsx";
 import UserProtectRoutes from "./Routes/UserProtectRoutes.jsx";
 import Profile from "./components/Profile/Profile.jsx";
+import Reservations from "./components/Reservations/Reservations.jsx";
 function App() {
   return (
     <>
@@ -58,6 +59,16 @@ function App() {
             <ProtectedRoutes>
               <UserProtectRoutes>
                 <Home />
+              </UserProtectRoutes>
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/reservations"
+          element={
+            <ProtectedRoutes>
+              <UserProtectRoutes>
+                <Reservations />
               </UserProtectRoutes>
             </ProtectedRoutes>
           }
