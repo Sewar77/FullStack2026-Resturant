@@ -2,23 +2,35 @@ import { createTable, getAllTables, getTableById, getTableByNumber } from "../mo
 import { asyncHandler } from "../middleware/asyncHandler.Middleware.js"
 export const createTableController = asyncHandler(async (req, res) => {
     const { table_number, capacity, floor } = req.body
+    console.log(table_number, capacity, floor);
+
     try {
         if (!table_number || !capacity || !floor) {
             return res.status(400).json({ message: "please fill all required fileds!" })
         }
+        console.log(1);
+
         if (floor < 0 || floor > 5) {
             return res.status(400).json({ message: "Floor must be second to fivth floor!" })
         }
+        console.log(2);
+
         if (capacity < 0) {
             return res.status(400).json({ message: "Capacity must be valid number" })
         }
+        console.log(3);
+
         if (capacity > 20) {
             return res.status(400).json({ message: "Table maximum capacity is 20 chair" })
         }
+        console.log(4);
+
         const existedTable = await getTableByNumber(table_number)
         if (existedTable) {
             return res.status(400).json({ message: "The table number is already exist!" })
         }
+        console.log(5);
+
         const newTable = await createTable(table_number, capacity, floor)
         return res.status(201).json({ message: "Table created seccussfully", table: newTable })
     } catch (err) {

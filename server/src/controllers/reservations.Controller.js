@@ -2,8 +2,7 @@ import { asyncHandler } from "../middleware/asyncHandler.Middleware.js";
 import { createReservation, getAllReservations } from "../models/reservation.Model.js";
 
 export const createReservationsController = asyncHandler(async (req, res) => {
-    const { userId,
-        tableId,
+    const {
         phone,
         full_name,
         email,
@@ -11,37 +10,44 @@ export const createReservationsController = asyncHandler(async (req, res) => {
         reservation_date,
         reservation_time,
         requests,
-        status } = req.body
+    } = req.body;
+
+    const userId = req.user.userid;
+    console.log("req.user", req.user);
     try {
-        const reservation = await createReservation(userId,
-            tableId,
+        if (!userId) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+
+        if (!phone || !full_name || !email || !guests_number || !reservation_date || !reservation_time) {
+            return res.status(400).json({ message: "All required fields must be filled" });
+        }
+
+        const reservation = await createReservation(
+            userId,
             phone,
             full_name,
             email,
             guests_number,
             reservation_date,
             reservation_time,
-            requests,
-            status)
-        if (!reservation) {
-            return res.status(400).json({ message: "Created failed" })
+            requests
+        );
 
-        }
-        return res.status(201).json({ message: "Created successfullt", reservation })
+        return res.status(201).json({
+            message: "Reservation created successfully",
+            reservation,
+        });
     } catch (err) {
-        return res.status(500).json({ message: "internal server rror" })
+        return res.status(500).json({ message: "internal server error" });
     }
-})
+});
 
 export const getAllReservationsController = asyncHandler(async (req, res) => {
-    try {
-        const reservations = await getAllReservations()
-        if (reservations.length === 0) {
-            return res.status(200).json({ message: "No reservations yet", reservations: [] })
-        }
-        return res.status(200).json({ message: "reservations", reservations })
+    const reservations = await getAllReservations();
 
-    } catch (err) {
-        return res.status(500).json({ message: "internal server rror" })
-    }
-})
+    return res.status(200).json({
+        message: reservations.length ? "Reservations fetched" : "No reservations yet",
+        reservations,
+    });
+});

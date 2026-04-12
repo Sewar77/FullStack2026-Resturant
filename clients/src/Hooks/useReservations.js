@@ -1,41 +1,32 @@
-import { useEffect, useState } from "react"
-import api from "../api"
-import toast from "react-hot-toast"
+import { useEffect, useState } from "react";
+import api from "../api";
+import toast from "react-hot-toast";
 
 export function useReservations() {
-    const [reservations, setReservations] = useState([])
+    const [reservations, setReservations] = useState([]);
+
     const fetchReservations = async () => {
-        const res = await api.get('/reservations')
-        setReservations(res.data.reservations)
-        toast.success(res.data.message)
-    }
-    const addNewReservations = async (userId,
-        tableId,
-        phone,
-        full_name,
-        email,
-        guests_number,
-        reservation_date,
-        reservation_time,
-        requests,
-        status) => {
-        const res = await api.post('/reservations', {
-            userId,
-            tableId,
-            phone,
-            full_name,
-            email,
-            guests_number,
-            reservation_date,
-            reservation_time,
-            requests,
-            status
-        })
-        setReservations(res.data.reservations)
-        toast.success(res.data.reservations || "created done!")
-    }
+        try {
+            const res = await api.get("/reservations");
+            setReservations(res.data.reservations);
+        } catch (err) {
+            toast.error("Failed to fetch reservations");
+        }
+    };
+
+    const addNewReservations = async (reservation) => {
+        try {
+            const res = await api.post("/reservation", reservation);
+            setReservations((prev) => [...prev, res.data.reservation]);
+            toast.success(res.data.message);
+        } catch (err) {
+            toast.error(err.response?.data?.message || "Error creating reservation");
+        }
+    };
+
     useEffect(() => {
-        fetchReservations()
-    }, [])
-    return { reservations, addNewReservations }
+        fetchReservations();
+    }, []);
+
+    return { reservations, addNewReservations };
 }

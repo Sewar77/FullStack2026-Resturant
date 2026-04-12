@@ -14,14 +14,12 @@ import categoryRoutes from "./src/routes/category.Routes.js"
 import tablesRoutes from "./src/routes/tables.Routes.js"
 import reservationsRoutes from "./src/routes/reservations.Routes.js"
 dotenv.config()
-connectDB()
-
 const app = express()
 app.use(express.json())
 app.use(globalRateLimit)
 app.use(helmet())
 app.use(cors({
-    origin: "http://localhost:5000",
+    origin: "http://localhost:4000",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
 }))
@@ -34,6 +32,12 @@ app.use('/api', categoryRoutes)
 app.use('/api', tablesRoutes)
 app.use('/api', reservationsRoutes)
 app.use(errorHandler)
+
+
+app.get("/health", (req, res) => {
+    res.send("alive");
+});
+
 app.listen(process.env.PORT, () => {
-    console.log(`Server is running on port ${process.env.PORT}`)
-})
+    console.log(`Server running on ${process.env.PORT}`);
+});

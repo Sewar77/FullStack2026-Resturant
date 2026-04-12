@@ -7,6 +7,6 @@ import express from 'express'
 const router = express.Router();
 
 router.get("/reservations", protect, getAllReservationsController)
-router.post("/reservation", protect, managerOnly, createReservationsController)
+router.post("/reservation", protect, createReservationsController)
 
 export default router

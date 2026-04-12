@@ -16,6 +16,7 @@ import UserProfile from "./Pages/Profile/Profile.jsx";
 import ManagerLayout from "./components/Manager/ManagerLayout.jsx";
 import ManageMenu from "./components/Manager/ManageMenu/ManageMenu.jsx";
 import Reservations from "./components/Reservations/Reservations.jsx";
+import ViewTables from "./components/Manager/ManageTables/ViewTables.jsx";
 function App() {
   return (
     <>
@@ -39,6 +40,7 @@ function App() {
           <Route path="caregories" element={<ManageCategories />} />
           <Route path="dashboard" element={<ManagerDashboard />} />
           <Route path="menu" element={<ManageMenu />} />
+          <Route path="tables" element={<ViewTables />} />
         </Route>
         {/* user routes */}
         <Route

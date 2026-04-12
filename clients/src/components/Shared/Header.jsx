@@ -27,7 +27,9 @@ function Header() {
                 <Button onClick={() => navigate("/user-home")}>Home</Button>
                 <Button>Menu</Button>
                 <Button>Contact Us</Button>
-                <Button>Reserve Now</Button>
+                <Button onClick={() => navigate("/reservations")}>
+                  Reserve Now
+                </Button>
                 <Button>Dashboard</Button>
                 <Button onClick={() => navigate("/profile")}>Profile</Button>
                 <Button onClick={logout}>Logout</Button>
@@ -37,7 +39,9 @@ function Header() {
             {user && user.role === "manager" && (
               <>
                 <Button>Messages</Button>
-                <Button>Reservations</Button>
+                <Button onClick={() => navigate("/tables")}>
+                  Reservations
+                </Button>
                 <Button onClick={() => navigate("/profile")}>Profile</Button>
                 <Button onClick={logout}>Logout</Button>
               </>
