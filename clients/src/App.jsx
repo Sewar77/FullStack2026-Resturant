@@ -12,14 +12,10 @@ import ManageCategories from "../src/components/Manager/ManageCategories/ManageC
 import ProtectedRoutes from "./Routes/ProtectedRoutes.jsx";
 import ManagerProtectRoutes from "./Routes/ManagerProtectedRoutes.jsx";
 import UserProtectRoutes from "./Routes/UserProtectRoutes.jsx";
-<<<<<<< HEAD
 import UserProfile from "./Pages/Profile/Profile.jsx";
 import ManagerLayout from "./components/Manager/ManagerLayout.jsx";
 import ManageMenu from "./components/Manager/ManageMenu/ManageMenu.jsx";
-=======
-import Profile from "./components/Profile/Profile.jsx";
 import Reservations from "./components/Reservations/Reservations.jsx";
->>>>>>> 2cdaf56a2dd2b10b74b9f6a751433e524d5a48ca
 function App() {
   return (
     <>

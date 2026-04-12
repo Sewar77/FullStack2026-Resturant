@@ -74,6 +74,8 @@ export function UserProvider({ children }) {
       const res = await api.post("/auth/login", userData);
       toast.success(res.data.message || "Login Successful");
       await currentUser();
+      console.log(res);
+
       if (res.data.user.role === "manager") navigate("/manager/dashboard");
       if (res.data.user.role === "user") navigate("/user-home");
     } catch (err) {
