@@ -29,3 +29,7 @@ export const updateAvilability = async (tableId, newAvialability) => {
     const result = await pool.query(`update tables set isavailable = $1 where id = $2 returning *`, [newAvialability, tableId])
     return result.rows[0]
 }
+export const updateTable = async (tableId) => {
+    const result = await pool.query(`update tables set isavailable = false where id = $1 returning *`, [tableId])
+    return result.rows[0]
+}

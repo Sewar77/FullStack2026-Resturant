@@ -1,6 +1,6 @@
 import { asyncHandler } from "../middleware/asyncHandler.Middleware.js";
-import { createReservation, getAllReservations, rejectReservation } from "../models/reservation.Model.js";
-
+import { acceptReservation, createReservation, getAllReservations, rejectReservation, updateReservation, userReservations } from "../models/reservation.Model.js";
+import { updateTable } from "../models/tables.Model.js"
 export const createReservationsController = asyncHandler(async (req, res) => {
     const {
         phone,
@@ -13,7 +13,7 @@ export const createReservationsController = asyncHandler(async (req, res) => {
     } = req.body;
 
     const userId = req.user.userid;
-    console.log("req.user", req.user);
+    console.log("req.user new", req.user);
     try {
         if (!userId) {
             return res.status(401).json({ message: "Unauthorized" });
@@ -51,6 +51,49 @@ export const getAllReservationsController = asyncHandler(async (req, res) => {
         reservations,
     });
 });
+export const userReservationsController = asyncHandler(async (req, res) => {
+    const userId = req.user.userid;
+    console.log("reservatuin user id", userId);
+    try {
+        const reservations = await userReservations(userId)
+
+        if (!reservations) {
+            return res.status(200).json({ message: "you dont have any resevations yet", reservations: [] })
+        }
+        return res.status(200).json({ message: "gets reservations successfully", reservations: reservations })
+    } catch (err) {
+        return res.status(500).json({ message: "internal server error" })
+    }
+})
+
+export const acceptReservationController = asyncHandler(async (req, res) => {
+    const resId = req.params.id;
+    console.log(resId);
+
+    try {
+        const table = await acceptReservation(resId);
+
+        if (!table) {
+            return res.status(200).json({
+                message: "No available table",
+                reservations: []
+            });
+        }
+        const updatedReservation = await updateReservation(resId, table.id);
+        const updatedTable = await updateTable(table.id);
+
+        return res.status(200).json({
+            message: "approved",
+            reservation: updatedReservation,
+            table: updatedTable
+        });
+
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ message: "internal server error" });
+    }
+});
+
 
 export const rejectReservationController = asyncHandler(async (req, res) => {
 

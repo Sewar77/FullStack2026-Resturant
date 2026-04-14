@@ -30,6 +30,9 @@ function Header() {
                 <Button onClick={() => navigate("/reservations")}>
                   Reserve Now
                 </Button>
+                <Button onClick={() => navigate("/my-reservations")}>
+                  My Reservations
+                </Button>
                 <Button>Dashboard</Button>
                 <Button onClick={() => navigate("/profile")}>Profile</Button>
                 <Button onClick={logout}>Logout</Button>

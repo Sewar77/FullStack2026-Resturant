@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 export function useReservations() {
     const [reservations, setReservations] = useState([]);
-
+    const [userReservation, setUserReservation] = useState([])
     const fetchReservations = async () => {
         try {
             const res = await api.get("/reservations");
@@ -33,9 +33,28 @@ export function useReservations() {
             toast.error(err.response?.data?.message || "Error rejected reservation");
         }
     }
+    const fectUserReservations = async () => {
+        try {
+            const res = await api.get(`/myreservations`);
+            setUserReservation(res.data.reservations);
+            toast.success(res.data.message);
+        } catch (err) {
+            toast.error(err.response?.data?.message || "Error rejected reservation");
+        }
+    }
+    const acceptReservationnUser = async (resid) => {
+        try {
+            const res = await api.put(`/reservation/approve/${resid}`);
+            await fetchReservations()
+            toast.success(res.data.message);
+        } catch (err) {
+            toast.error(err.response?.data?.message || "Error approved reservation");
+        }
+    }
     useEffect(() => {
         fetchReservations();
+        fectUserReservations()
     }, []);
 
-    return { reservations, addNewReservations, rejectReservation };
+    return { reservations, addNewReservations, rejectReservation, userReservation, acceptReservationnUser };
 }

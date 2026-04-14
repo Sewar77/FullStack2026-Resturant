@@ -17,6 +17,7 @@ import ManagerLayout from "./components/Manager/ManagerLayout.jsx";
 import ManageMenu from "./components/Manager/ManageMenu/ManageMenu.jsx";
 import Reservations from "./components/Reservations/Reservations.jsx";
 import ViewTables from "./components/Manager/ManageTables/ViewTables.jsx";
+import UserReservations from "./Pages/UserReservations/UserReservations.jsx";
 import ManageReservations from "./components/Manager/ManageReservations/ManageReservations.jsx";
 function App() {
   return (
@@ -84,6 +85,14 @@ function App() {
           element={
             <ProtectedRoutes>
               <UserProfile />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/my-reservations"
+          element={
+            <ProtectedRoutes>
+              <UserReservations />
             </ProtectedRoutes>
           }
         />

@@ -108,6 +108,7 @@ table_number int not null unique,
 capacity int not null, 
 floor int null, 
 created_at timestamp default current_timestamp
+is_available boolean default false
 )
 
 create table reservation(

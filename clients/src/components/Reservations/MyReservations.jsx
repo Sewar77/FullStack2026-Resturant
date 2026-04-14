@@ -1,3 +1,4 @@
+import { useReservations } from "../../Hooks/useReservations";
 import {
   Card,
   CardContent,
@@ -7,24 +8,15 @@ import {
   Typography,
   Button,
   Container,
+  ButtonBase,
 } from "@mui/material";
-import { useReservations } from "../../../Hooks/useReservations";
-function ManageReservations() {
-  const { reservations, rejectReservation, acceptReservationnUser } =
-    useReservations();
-  const handleAccept = (resId) => {
-    console.log("1=>", resId);
-
-    acceptReservationnUser(resId);
-  };
-  console.log(reservations);
-  const handleRejectReservation = (reservationId) => {
-    rejectReservation(reservationId);
-  };
+function MyReservations() {
+  const { userReservation, deleteReservation } = useReservations();
+  console.log(userReservation);
+  const handleCancel = (reservationId) => {}; //task!!!
   return (
     <>
       <Container>
-        <Typography variant="Reservations">Reservations</Typography>
         <Paper
           elevation={4}
           sx={{
@@ -32,6 +24,8 @@ function ManageReservations() {
             p: 4,
           }}
         >
+          <Typography variant="h2">My Reservations</Typography>
+
           <Grid
             container
             spacing={4}
@@ -40,7 +34,7 @@ function ManageReservations() {
               p: 4,
             }}
           >
-            {Array.from(reservations).map((reservation, idx) => {
+            {Array.from(userReservation).map((reservation, idx) => {
               return (
                 <Grid size={6} key={reservation.id}>
                   <Card
@@ -53,6 +47,15 @@ function ManageReservations() {
                   >
                     <CardContent>
                       <Typography variant="h3">Res. # {idx + 1}</Typography>
+                      <Typography
+                        variant="h5"
+                        color="error"
+                        sx={{
+                          p: 1,
+                        }}
+                      >
+                        {reservation.status}
+                      </Typography>
                       <Typography variant="h5">
                         Full Name: {reservation.full_name}
                       </Typography>
@@ -75,33 +78,14 @@ function ManageReservations() {
                         Client Notes:
                         {reservation.requests || "No Specil reuqests"}
                       </Typography>
-                      <Typography variant="h6">
-                        State : {reservation.status}
-                      </Typography>
 
-                      <Stack
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                          p: 2,
-                        }}
+                      <Button
+                        variant="contained"
+                        color="warning"
+                        onClick={() => handleCancel(reservation.id)}
                       >
-                        <Button
-                          variant="contained"
-                          onClick={() => handleAccept(reservation.id)}
-                        >
-                          Accept
-                        </Button>
-                        <Button
-                          variant="contained"
-                          onClick={() =>
-                            handleRejectReservation(reservation.id)
-                          }
-                        >
-                          Reject
-                        </Button>
-                      </Stack>
+                        Cancel
+                      </Button>
                     </CardContent>
                   </Card>
                 </Grid>
@@ -113,4 +97,5 @@ function ManageReservations() {
     </>
   );
 }
-export default ManageReservations;
+
+export default MyReservations;
