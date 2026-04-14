@@ -17,9 +17,14 @@ import ManagerLayout from "./components/Manager/ManagerLayout.jsx";
 import ManageMenu from "./components/Manager/ManageMenu/ManageMenu.jsx";
 import Reservations from "./components/Reservations/Reservations.jsx";
 import ViewTables from "./components/Manager/ManageTables/ViewTables.jsx";
+import ManageReservations from "./components/Manager/ManageReservations/ManageReservations.jsx";
 function App() {
   return (
     <>
+      {/* user see the rejected/accpted reservation */}
+      {/* admin link between the res and table */}
+      {/* user notice that the reservation accpeted */}
+      {/* optional: user/admin cancel reservation */}
       <Toaster position="top-center" />
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -41,6 +46,7 @@ function App() {
           <Route path="dashboard" element={<ManagerDashboard />} />
           <Route path="menu" element={<ManageMenu />} />
           <Route path="tables" element={<ViewTables />} />
+          <Route path="reservation" element={<ManageReservations />} />
         </Route>
         {/* user routes */}
         <Route

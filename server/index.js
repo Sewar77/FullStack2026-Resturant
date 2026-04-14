@@ -16,6 +16,7 @@ import reservationsRoutes from "./src/routes/reservations.Routes.js"
 dotenv.config()
 const app = express()
 app.use(express.json())
+connectDB()
 app.use(globalRateLimit)
 app.use(helmet())
 app.use(cors({

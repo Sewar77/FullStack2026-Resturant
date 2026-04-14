@@ -23,10 +23,19 @@ export function useReservations() {
             toast.error(err.response?.data?.message || "Error creating reservation");
         }
     };
-
+    const rejectReservation = async (resId) => {
+        try {
+            const res = await api.put(`/reservation/reject/${resId}`);
+            setReservations(res.data.reservation);
+            await fetchReservations()
+            toast.success(res.data.message);
+        } catch (err) {
+            toast.error(err.response?.data?.message || "Error rejected reservation");
+        }
+    }
     useEffect(() => {
         fetchReservations();
     }, []);
 
-    return { reservations, addNewReservations };
+    return { reservations, addNewReservations, rejectReservation };
 }

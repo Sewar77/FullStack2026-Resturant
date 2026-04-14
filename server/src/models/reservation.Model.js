@@ -34,3 +34,13 @@ export const getAllReservations = async () => {
     const result = await pool.query("SELECT * FROM reservation");
     return result.rows;
 };
+
+
+export const rejectReservation = async (resId, reject) => {
+    console.log(resId, reject);
+
+    const result = await pool.query(`update reservation set status = $1 where id = $2 returning *`, [reject, resId])
+    console.log(result.rows);
+
+    return result.rows[0]
+}

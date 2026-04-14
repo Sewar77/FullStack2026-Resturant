@@ -11,7 +11,6 @@ export function useTables() {
         setTables(res.data.tables)
         toast.success(res.data.message)
     }
-
     //create new table
     const addNewTable = async (newTable) => {
         try {
@@ -19,15 +18,26 @@ export function useTables() {
             console.log(newTable);
             await fetchtables()
             setTables(res.data.tables)
-            toast.success(res.data.tables || "created done!")
+            toast.success(res.data.message || "created done!")
         } catch (err) {
             console.log(err);
 
         }
 
     }
+    const updateAvilability = async (tableId) => {
+        try {
+            const res = await api.put(`/table/avilability/${tableId}`)
+            setTables(res.data.table)
+            await fetchtables()
+            toast.success("updated done!")
+        } catch (err) {
+            console.log(err);
+
+        }
+    }
     useEffect(() => {
         fetchtables()
     }, [])
-    return { tables, addNewTable }
+    return { tables, addNewTable, updateAvilability }
 }

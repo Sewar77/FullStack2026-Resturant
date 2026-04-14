@@ -1,5 +1,5 @@
 import { asyncHandler } from "../middleware/asyncHandler.Middleware.js";
-import { createReservation, getAllReservations } from "../models/reservation.Model.js";
+import { createReservation, getAllReservations, rejectReservation } from "../models/reservation.Model.js";
 
 export const createReservationsController = asyncHandler(async (req, res) => {
     const {
@@ -51,3 +51,22 @@ export const getAllReservationsController = asyncHandler(async (req, res) => {
         reservations,
     });
 });
+
+export const rejectReservationController = asyncHandler(async (req, res) => {
+
+    const resId = req.params.id
+    console.log("resId", resId);
+    try {
+        const reject = "rejected"
+        const rejected = await rejectReservation(resId, reject);
+        console.log(rejected);
+
+        if (rejected.length === 0) {
+            return res.status(400).json({ message: "could not reject" });
+        }
+        return res.status(200).json({ message: "reservation reejcted", reservation: rejected });
+
+    } catch (err) {
+        return res.status(500).json({ message: "internal server error" });
+    }
+})

@@ -1,11 +1,13 @@
 import {
   Box,
   Button,
+  ButtonBase,
   Card,
   CardContent,
   Container,
   Grid,
   Paper,
+  Stack,
   TextField,
   Typography,
 } from "@mui/material";
@@ -13,7 +15,9 @@ import { useTables } from "../../../Hooks/useTables.js";
 import { useState } from "react";
 
 function ViewTables() {
-  const { tables, addNewTable } = useTables();
+  const { tables, addNewTable, updateAvilability } = useTables();
+  console.log("tables", tables);
+
   const [newTable, setNewTable] = useState({});
 
   const [isNewTable, setIsNewTable] = useState(false);
@@ -25,6 +29,10 @@ function ViewTables() {
   const handleAddNewTable = () => {
     console.log(newTable);
     addNewTable(newTable);
+  };
+  const handleChangeAvilability = (tableId) => {
+    console.log(tableId);
+    updateAvilability(tableId);
   };
   return (
     <>
@@ -98,28 +106,52 @@ function ViewTables() {
               p: 4,
             }}
           >
-            {Array.from(
-              tables.map((table) => {
-                return (
-                  <Grid size={4} key={table.id}>
-                    <Card>
-                      <CardContent>
-                        <Typography variant="h3">Table {table.id}</Typography>
-                        <Typography>
-                          Table Number: {table.table_number}
-                        </Typography>
-                        <Typography>
-                          Table Capacity: {table.capacity}
-                        </Typography>
-                        <Typography>
-                          Table Availability: {table.isAvailable}
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                );
-              })
-            )}
+            {Array.from(tables).map((table) => {
+              return (
+                <Grid size={6} key={table.id}>
+                  <Card
+                    sx={{
+                      bgcolor: "#ebe3de",
+                      borderRadius: 3,
+                      color: "black",
+                    }}
+                  >
+                    <CardContent
+                      sx={{
+                        p: 2,
+                        m: 2,
+                      }}
+                    >
+                      <Typography variant="h3">Table {table.id}</Typography>
+                      <Typography>Number: {table.table_number}</Typography>
+                      <Typography>Capacity: {table.capacity}</Typography>
+                      <Typography>
+                        Availability:
+                        {table.isavailable ? "Available" : "Not Available"}
+                      </Typography>
+                      <Stack
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          gap: 4,
+                          justifyContent: "space-between",
+                          p: 3,
+                          m: 3,
+                        }}
+                      >
+                        <Button
+                          variant="contained"
+                          onClick={() => handleChangeAvilability(table.id)}
+                        >
+                          Avilable
+                        </Button>
+                        <Button variant="contained">Edit</Button>
+                      </Stack>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              );
+            })}
           </Grid>
         </Paper>
       </Container>
