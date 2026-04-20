@@ -13,6 +13,7 @@ import menuRoutes from "./src/routes/menu.Routes.js"
 import categoryRoutes from "./src/routes/category.Routes.js"
 import tablesRoutes from "./src/routes/tables.Routes.js"
 import reservationsRoutes from "./src/routes/reservations.Routes.js"
+import productsRoutes from "./src/routes/products.Routes.js"
 dotenv.config()
 const app = express()
 app.use(express.json())
@@ -26,12 +27,14 @@ app.use(cors({
 }))
 app.use(cookieParser())
 app.use(bodyPrser.urlencoded({ extended: true }))
+//step fifth 
 app.use('/api', authRoutes)
 app.use("/api", userRoutes)
 app.use('/api', menuRoutes)
 app.use('/api', categoryRoutes)
 app.use('/api', tablesRoutes)
 app.use('/api', reservationsRoutes)
+app.use('/api', productsRoutes)
 app.use(errorHandler)
 
 

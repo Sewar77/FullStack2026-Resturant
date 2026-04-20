@@ -1,5 +1,5 @@
 import { pool } from "../config/db.js";
-
+//step two
 export const getUserById = async (userid) => {
     const result = await pool.query(`select * from users where userid = 
         $1`, [userid])

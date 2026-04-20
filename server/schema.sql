@@ -129,3 +129,34 @@ created_at timestamp default current_timestamp
 
 select * from reservation
 
+
+
+
+-- in pg admin 
+create table products{
+	id serial PRIMARY KEY,
+	name varchar(200), 
+	price number, 
+	quantity number, 
+	created_at timestamp default current_timestamp
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

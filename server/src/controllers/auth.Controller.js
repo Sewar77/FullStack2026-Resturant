@@ -4,7 +4,7 @@ import { findUserByEmail, getUserById, saveRefreshToken } from "../models/user.M
 import { generateAccessTokens, generateRefreshTokens, verifyRefreshTokens } from "../utils/tokens.utils.js";
 import { setAccessTokenCookie, setRefreshTokenCookie } from "../utils/cookies.utils.js";
 import { asyncHandler } from "../middleware/asyncHandler.Middleware.js";
-
+//step three
 export const register = asyncHandler(async (req, res) => {
     const { name, email, password } = req.validateData;
 
