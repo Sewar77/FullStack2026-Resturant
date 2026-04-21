@@ -21,7 +21,7 @@ connectDB()
 app.use(globalRateLimit)
 app.use(helmet())
 app.use(cors({
-    origin: "https://full-stack2026-resturant.vercel.app",
+    origin: "https://full-stack2026-resturant-rgmd1m1in-sewar77s-projects.vercel.app",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
 }))
