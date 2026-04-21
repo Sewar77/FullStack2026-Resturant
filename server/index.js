@@ -21,7 +21,7 @@ connectDB()
 app.use(globalRateLimit)
 app.use(helmet())
 app.use(cors({
-    origin: "http://localhost:4000",
+    origin: "https://resturantfs.vercel.app/",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
 }))
